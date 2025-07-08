@@ -172,6 +172,7 @@ nav [data-section] {
 
 .main-block{
   position: relative;
+  padding-top: 110px;
 }
 
 .name-item img{
