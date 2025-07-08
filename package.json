@@ -1,5 +1,5 @@
 {
-	"name": "customer-success-js",
+	"name": "customer-success",
 	"version": "1.0.0",
 	"description": "Customer Success Page - JavaScript version",
 	"main": "index.html",
@@ -14,5 +14,6 @@
 	"license": "ISC",
 	"dependencies": {
 		"vite": "^7.0.2"
-	}
+	},
+	"devDependencies": {}
 }
