@@ -170,6 +170,11 @@ nav [data-section] {
   text-wrap: nowrap;
 }
 
+.tab:hover{
+  background: #fff !important;
+  color: #000 !important;
+}
+
 .main-block{
   position: relative;
 }
