@@ -52,7 +52,7 @@ class MobileMenuController {
 
 	private setupOverlayClose(): void {
 		if (this.overlay) {
-			this.overlay.addEventListener('click', (e) => {
+			this.overlay.addEventListener('click', e => {
 				if (e.target === this.overlay) {
 					this.closeMenu()
 				}
@@ -133,7 +133,9 @@ class NavigationController {
 	}
 
 	private setInitialActiveState(): void {
-		const firstDesktopTab = document.querySelector('.tab[data-section="general"]')
+		const firstDesktopTab = document.querySelector(
+			'.tab[data-section="general"]'
+		)
 		if (firstDesktopTab) {
 			this.setActiveDesktopNav(firstDesktopTab)
 		}
@@ -188,7 +190,9 @@ class NavigationController {
 
 	private setActiveMobileNav(activeItem: Element): void {
 		// Remove active class from all mobile nav items
-		const mobileNavItems = document.querySelectorAll('.mobile-tab[data-section]')
+		const mobileNavItems = document.querySelectorAll(
+			'.mobile-tab[data-section]'
+		)
 		mobileNavItems.forEach(item => {
 			item.classList.remove('active')
 		})
@@ -357,60 +361,45 @@ class TeamController {
 }
 
 // Initialize everything when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-	new MobileMenuController()
-	new NavigationController()
-	new AnimationController()
-	new HiringFunnelController()
-	new TeamController()
+function initializeApp() {
+	try {
+		console.log('Initializing app...')
 
-	// Add some additional CSS animations
-	const style = document.createElement('style')
-	style.textContent = `
-    .animate-fade-in-up {
-      animation: fadeInUp 0.6s ease-out forwards;
-    }
+		new MobileMenuController()
+		new NavigationController()
+		new AnimationController()
+		new HiringFunnelController()
+		new TeamController()
 
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
+		console.log(
+			'Endless Job Page with enhanced mobile navigation initialized successfully!'
+		)
+		window.appInitialized = true
+	} catch (error) {
+		console.error('Error initializing app:', error)
+	}
+}
 
-    .section {
-      scroll-margin-top: 20px;
-    }
+// Multiple ways to ensure the app initializes
+if (document.readyState === 'loading') {
+	document.addEventListener('DOMContentLoaded', initializeApp)
+} else {
+	// DOM is already loaded
+	initializeApp()
+}
 
-    /* Smooth scrolling for the content area */
-    .overflow-y-auto {
-      scroll-behavior: smooth;
-    }
-
-    /* Custom scrollbar for content area */
-    .overflow-y-auto::-webkit-scrollbar {
-      width: 6px;
-    }
-
-    .overflow-y-auto::-webkit-scrollbar-track {
-      background: #f1f5f9;
-    }
-
-    .overflow-y-auto::-webkit-scrollbar-thumb {
-      background: #cbd5e1;
-      border-radius: 3px;
-    }
-
-    .overflow-y-auto::-webkit-scrollbar-thumb:hover {
-      background: #94a3b8;
-    }
-  `
-	document.head.appendChild(style)
+// Fallback initialization
+window.addEventListener('load', () => {
+	// Double check that everything is initialized
+	if (!window.appInitialized) {
+		console.log('Fallback initialization...')
+		initializeApp()
+	}
 })
 
-// Add some console logging for debugging
-console.log('Endless Job Page with enhanced mobile navigation initialized successfully!')
+// Declare global variable for TypeScript
+declare global {
+	interface Window {
+		appInitialized?: boolean
+	}
+}
