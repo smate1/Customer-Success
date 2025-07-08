@@ -14,6 +14,96 @@
   body {
     font-family: 'Inter', sans-serif;
   }
+
+  /* Enhanced team member styling inspired by Awesomic */
+  .name-item {
+    width: 72px !important;
+    height: 72px !important;
+  }
+
+  .name-item img {
+    border-radius: 50% !important;
+    width: 72px !important;
+    height: 72px !important;
+    object-fit: cover;
+    border: 3px solid #f3f4f6;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .name-item img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Enhanced team section spacing */
+  .team-section {
+    padding: 32px 0 !important;
+  }
+
+  .team-member-item {
+    padding: 20px 0 !important;
+    margin-bottom: 20px !important;
+    border-bottom: 1px solid #f1f5f9;
+  }
+
+  .team-member-item:last-child {
+    border-bottom: none;
+  }
+
+  .team-member-info .member-name {
+    font-size: 18px !important;
+    font-weight: 600 !important;
+    color: #1f2937 !important;
+    margin-bottom: 4px !important;
+  }
+
+  .team-member-info .member-role {
+    font-size: 15px !important;
+    color: #6b7280 !important;
+    font-weight: 500 !important;
+  }
+
+  /* Mobile team section enhancements */
+  .mobile-team-section {
+    padding: 28px !important;
+    margin: 32px 0 !important;
+  }
+
+  /* Better spacing for the overall team container */
+  .team-container {
+    padding: 24px 0 !important;
+  }
+
+  /* Awesomic-inspired enhancements */
+  .team-section h3 {
+    font-size: 16px !important;
+    letter-spacing: 0.05em !important;
+    margin-bottom: 24px !important;
+  }
+
+  /* Better card styling for mobile */
+  .mobile-team-section {
+    background: linear-gradient(135deg, #fafafa 0%, #ffffff 100%) !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+    border-radius: 16px !important;
+  }
+
+  /* Professional look for team names */
+  .team-member-info {
+    min-height: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  /* Smooth transitions */
+  .team-member-item {
+    transition: transform 0.2s ease !important;
+  }
+
+  .team-member-item:hover {
+    transform: translateX(4px) !important;
+  }
 </style>
 
 <body class="flex min-h-screen w-full flex-col font-medium font-sans leading-snug tracking-tight antialiased">
@@ -99,28 +189,28 @@
 
         <!-- Meet the hiring team -->
         <div class="flex flex-col gap-4">
-          <h3 class="text-sm font-semibold text-gray-900 uppercase tracking-wide">Meet the hiring team</h3>
-          <div class="flex flex-col gap-3">
-            <div class="flex items-center gap-3">
+          <h3 class="text-lg font-semibold text-gray-900 uppercase tracking-wide">Meet the hiring team</h3>
+          <div class="flex flex-col gap-5">
+            <div class="flex items-center gap-4">
               <div
-                class="name-item w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-semibold">
-                <img src="./src/images/Daphne_4_791f198d-d9f4-41d4-9d33-1115833c022b_480x480.webp" alt=""
-                  class="w-full h-full rounded-full object-cover">
+                class="name-item flex items-center justify-center text-white font-semibold">
+                <img src="./src/images/Daphne_4_791f198d-d9f4-41d4-9d33-1115833c022b_480x480.webp" alt="Annika Dahl"
+                  class="object-cover">
               </div>
-              <div>
-                <div class="font-medium text-gray-900">Annika Dahl</div>
-                <div class="text-sm text-gray-600">Talent Acquisition Specialist</div>
+              <div class="team-member-info">
+                <div class="member-name">Annika Dahl</div>
+                <div class="member-role">Talent Acquisition Specialist</div>
               </div>
             </div>
-            <div class="flex items-center gap-3">
+            <div class="flex items-center gap-4">
               <div
-                class="name-item w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-semibold">
-                <img src="./src/images/premium_photo-1689977927774-401b12d137d6.jpg" alt=""
-                  class="w-full h-full rounded-full object-cover">
+                class="name-item flex items-center justify-center text-white font-semibold">
+                <img src="./src/images/premium_photo-1689977927774-401b12d137d6.jpg" alt="John Okomayin"
+                  class="object-cover">
               </div>
-              <div>
-                <div class="font-medium text-gray-900">John Okomayin</div>
-                <div class="text-sm text-gray-600">Hiring Manager, Lead</div>
+              <div class="team-member-info">
+                <div class="member-name">John Okomayin</div>
+                <div class="member-role">Hiring Manager, Lead</div>
               </div>
             </div>
           </div>
@@ -233,29 +323,29 @@
         </nav>
 
         <!-- Mobile Team Section (visible only on mobile) -->
-        <div class="lg:hidden mb-6 bg-white rounded-lg p-4 shadow-sm border border-gray-200">
-          <h3 class="text-sm font-semibold text-gray-900 uppercase tracking-wide mb-4">Meet the hiring team</h3>
-          <div class="flex flex-col gap-3">
-            <div class="flex items-center gap-3">
+        <div class="lg:hidden mb-6 bg-white rounded-lg shadow-sm border border-gray-200 mobile-team-section">
+          <h3 class="text-lg font-semibold text-gray-900 uppercase tracking-wide mb-6">Meet the hiring team</h3>
+          <div class="flex flex-col team-section">
+            <div class="flex items-center gap-4 team-member-item">
               <div
-                class="name-item w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-semibold">
-                <img src="./src/images/Daphne_4_791f198d-d9f4-41d4-9d33-1115833c022b_480x480.webp" alt=""
+                class="name-item rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-semibold">
+                <img src="./src/images/Daphne_4_791f198d-d9f4-41d4-9d33-1115833c022b_480x480.webp" alt="Annika Dahl"
                   class="w-full h-full rounded-full object-cover">
               </div>
-              <div>
-                <div class="font-medium text-gray-900">Annika Dahl</div>
-                <div class="text-sm text-gray-600">Talent Acquisition Specialist</div>
+              <div class="team-member-info">
+                <div class="member-name">Annika Dahl</div>
+                <div class="member-role">Talent Acquisition Specialist</div>
               </div>
             </div>
-            <div class="flex items-center gap-3">
+            <div class="flex items-center gap-4 team-member-item">
               <div
-                class="name-item w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-semibold">
-                <img src="./src/images/premium_photo-1689977927774-401b12d137d6.jpg" alt=""
+                class="name-item rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-semibold">
+                <img src="./src/images/premium_photo-1689977927774-401b12d137d6.jpg" alt="John Okomayin"
                   class="w-full h-full rounded-full object-cover">
               </div>
-              <div>
-                <div class="font-medium text-gray-900">John Okomayin</div>
-                <div class="text-sm text-gray-600">Hiring Manager, Lead</div>
+              <div class="team-member-info">
+                <div class="member-name">John Okomayin</div>
+                <div class="member-role">Hiring Manager, Lead</div>
               </div>
             </div>
           </div>
@@ -292,21 +382,21 @@
           <h2 class="text-xl lg:text-2xl font-semibold text-gray-900 mb-6">Customer Success Sales Executive</h2>
           <div>
             <div class="flex flex-col sm:flex-row gap-2">
-              <div class="bullitt flex items-center gap-2 text-sm text-gray-600">
+              <div class="bullitt flex items-center gap-1 text-sm text-gray-600">
                 <svg class="w-4 h-4" fill="white" viewBox="0 0 24 24">
                   <path
                     d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
                 </svg>
                 <span class="font-medium">GERMANY</span>
               </div>
-              <div class="bullitt flex items-center gap-2 text-sm text-gray-600">
+              <div class="bullitt flex items-center gap-1 text-sm text-gray-600">
                 <svg class="w-4 h-4" fill="white" viewBox="0 0 24 24">
                   <path
                     d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
                 </svg>
                 <span class="font-medium">CUSTOMER SUCCESS</span>
               </div>
-              <div class="bullitt flex items-center gap-2 text-sm text-gray-600">
+              <div class="bullitt flex items-center gap-1 text-sm text-gray-600">
                 <svg class="w-4 h-4" fill="white" viewBox="0 0 24 24">
                   <path
                     d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
