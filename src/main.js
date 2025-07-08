@@ -84,9 +84,12 @@ class MobileMenuController {
 	scrollToSection(sectionId) {
 		const targetElement = document.getElementById(sectionId)
 		if (targetElement) {
-			targetElement.scrollIntoView({
+			// Calculate offset for better positioning
+			const offsetTop = targetElement.offsetTop - 80 // 80px offset for header
+
+			window.scrollTo({
+				top: offsetTop,
 				behavior: 'smooth',
-				block: 'start',
 			})
 		}
 	}
@@ -145,24 +148,41 @@ class NavigationController {
 
 	scrollToSection(sectionId) {
 		const targetElement = document.getElementById(sectionId)
-		if (targetElement && this.contentArea) {
-			// Smooth scroll to the target section
-			targetElement.scrollIntoView({
+		if (targetElement) {
+			// Calculate offset for better positioning
+			const offsetTop = targetElement.offsetTop - 80 // 80px offset for header
+
+			window.scrollTo({
+				top: offsetTop,
 				behavior: 'smooth',
-				block: 'start',
 			})
 		}
 	}
 
 	setActiveNav(activeItem) {
-		// Handle desktop navigation
+		const targetSection = activeItem.getAttribute('data-section')
+
+		// Update both desktop and mobile navigation to keep them in sync
 		if (activeItem.classList.contains('tab')) {
 			this.setActiveDesktopNav(activeItem)
+			// Also update corresponding mobile nav
+			const correspondingMobileNavItem = document.querySelector(
+				`.mobile-tab[data-section="${targetSection}"]`
+			)
+			if (correspondingMobileNavItem) {
+				this.setActiveMobileNav(correspondingMobileNavItem)
+			}
 		}
 
-		// Handle mobile navigation
 		if (activeItem.classList.contains('mobile-tab')) {
 			this.setActiveMobileNav(activeItem)
+			// Also update corresponding desktop nav
+			const correspondingDesktopNavItem = document.querySelector(
+				`.tab[data-section="${targetSection}"]`
+			)
+			if (correspondingDesktopNavItem) {
+				this.setActiveDesktopNav(correspondingDesktopNavItem)
+			}
 		}
 	}
 
@@ -193,11 +213,50 @@ class NavigationController {
 	setupScrollspy() {
 		if (!this.contentArea) return
 
+		let activeSection = null
+		let debounceTimer = null
+
 		const observer = new IntersectionObserver(
 			entries => {
-				entries.forEach(entry => {
-					if (entry.isIntersecting) {
-						const sectionId = entry.target.id
+				// Clear previous debounce timer
+				if (debounceTimer) {
+					clearTimeout(debounceTimer)
+				}
+
+				// Debounce to prevent rapid switching
+				debounceTimer = setTimeout(() => {
+					// Find the section with the highest intersection ratio
+					let mostVisibleSection = null
+					let highestRatio = 0
+
+					entries.forEach(entry => {
+						if (
+							entry.isIntersecting &&
+							entry.intersectionRatio > highestRatio
+						) {
+							highestRatio = entry.intersectionRatio
+							mostVisibleSection = entry.target
+						}
+					})
+
+					// If no section is intersecting, find the closest one
+					if (!mostVisibleSection) {
+						let closestDistance = Infinity
+						entries.forEach(entry => {
+							const rect = entry.target.getBoundingClientRect()
+							const distance = Math.abs(rect.top)
+							if (distance < closestDistance) {
+								closestDistance = distance
+								mostVisibleSection = entry.target
+							}
+						})
+					}
+
+					// Update active section only if it's different
+					if (mostVisibleSection && mostVisibleSection !== activeSection) {
+						activeSection = mostVisibleSection
+						const sectionId = activeSection.id
+
 						const correspondingDesktopNavItem = document.querySelector(
 							`.tab[data-section="${sectionId}"]`
 						)
@@ -213,17 +272,61 @@ class NavigationController {
 							this.setActiveMobileNav(correspondingMobileNavItem)
 						}
 					}
-				})
+				}, 100) // 100ms debounce
 			},
 			{
-				threshold: 0.3,
-				rootMargin: '-20% 0% -20% 0%',
+				threshold: [0, 0.25, 0.5, 0.75, 1],
+				rootMargin: '-10% 0% -10% 0%',
 			}
 		)
 
 		// Observe all sections
 		this.sections.forEach(section => {
 			observer.observe(section)
+		})
+
+		// Also handle manual scroll to update active section
+		let scrollTimer = null
+		window.addEventListener('scroll', () => {
+			if (scrollTimer) {
+				clearTimeout(scrollTimer)
+			}
+
+			scrollTimer = setTimeout(() => {
+				// Find the section closest to the top of the viewport
+				let closestSection = null
+				let closestDistance = Infinity
+
+				this.sections.forEach(section => {
+					const rect = section.getBoundingClientRect()
+					const distance = Math.abs(rect.top - 100) // 100px offset for better UX
+
+					if (distance < closestDistance) {
+						closestDistance = distance
+						closestSection = section
+					}
+				})
+
+				if (closestSection && closestSection !== activeSection) {
+					activeSection = closestSection
+					const sectionId = activeSection.id
+
+					const correspondingDesktopNavItem = document.querySelector(
+						`.tab[data-section="${sectionId}"]`
+					)
+					const correspondingMobileNavItem = document.querySelector(
+						`.mobile-tab[data-section="${sectionId}"]`
+					)
+
+					if (correspondingDesktopNavItem) {
+						this.setActiveDesktopNav(correspondingDesktopNavItem)
+					}
+
+					if (correspondingMobileNavItem) {
+						this.setActiveMobileNav(correspondingMobileNavItem)
+					}
+				}
+			}, 150)
 		})
 	}
 }

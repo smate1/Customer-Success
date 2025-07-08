@@ -6,6 +6,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 80px;
 }
 
 body {
@@ -65,7 +66,7 @@ body {
 
 /* Section scroll margin */
 .section {
-  scroll-margin-top: 20px;
+  scroll-margin-top: 80px !important;
 }
 
 /* Custom scrollbar styles */
@@ -119,15 +120,30 @@ nav [data-section] {
 }
 
 /* Desktop navigation active states */
-.tab.active {
-  background-color: white !important;
-  color: black !important;
+.tab {
+  transition: all 0.3s ease;
+  position: relative;
 }
 
-.tab:hover:not(.active) {
-  background-color: #374151;
-  color: white;
+.tab.active {
+  background-color: #f3f4f6 !important;
+  color: #1f2937 !important;
 }
+
+
+/* Active tab styles for mobile */
+.mobile-tab {
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.mobile-tab.active {
+  background-color: #2b2b2b !important;
+  color: white !important;
+  font-weight: 600 !important;
+}
+
+
 
 /* Team member avatar hover effects */
 .rounded-full {
@@ -149,7 +165,7 @@ nav [data-section] {
 }
 
 .aside{
-  padding-top: 0 !important; 
+  padding-top: 0 !important;
 }
 
 .navbar{

@@ -1,6 +1,4 @@
-import { defineConfig } from 'vite'
-
-export default defineConfig({
+export default {
 	build: {
 		outDir: 'dist',
 		assetsDir: 'assets',
@@ -18,4 +16,4 @@ export default defineConfig({
 		host: '0.0.0.0',
 		port: 3000,
 	},
-})
+}
