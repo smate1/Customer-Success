@@ -192,8 +192,7 @@
           <h3 class="text-lg font-semibold text-gray-900 uppercase tracking-wide">Meet the hiring team</h3>
           <div class="flex flex-col gap-5">
             <div class="flex items-center gap-4">
-              <div
-                class="name-item flex items-center justify-center text-white font-semibold">
+              <div class="name-item flex items-center justify-center text-white font-semibold">
                 <img src="./src/images/Daphne_4_791f198d-d9f4-41d4-9d33-1115833c022b_480x480.webp" alt="Annika Dahl"
                   class="object-cover">
               </div>
@@ -203,8 +202,7 @@
               </div>
             </div>
             <div class="flex items-center gap-4">
-              <div
-                class="name-item flex items-center justify-center text-white font-semibold">
+              <div class="name-item flex items-center justify-center text-white font-semibold">
                 <img src="./src/images/premium_photo-1689977927774-401b12d137d6.jpg" alt="John Okomayin"
                   class="object-cover">
               </div>
@@ -218,7 +216,7 @@
 
         <!-- Action Buttons -->
         <div class="flex items-center gap-3">
-          <a href="#">
+          <a href="#" onclick="openCalendar(); return false;">
             <button
               class="inline-flex h-10 w-auto items-center justify-center whitespace-nowrap rounded-full px-6 py-2 text-sm font-semibold tracking-tight transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-black text-white  hover:bg-gray-800">
               Book an intro call
@@ -325,8 +323,8 @@
         <!-- Mobile Team Section (visible only on mobile) -->
         <div class="lg:hidden mb-6 bg-white rounded-lg shadow-sm border border-gray-200 mobile-team-section">
           <h3 class="text-lg font-semibold text-gray-900 uppercase tracking-wide mb-6">Meet the hiring team</h3>
-          <div class="flex flex-col team-section">
-            <div class="flex items-center gap-4 team-member-item">
+          <div class="flex flex-col">
+            <div class="flex items-center gap-4">
               <div
                 class="name-item rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-semibold">
                 <img src="./src/images/Daphne_4_791f198d-d9f4-41d4-9d33-1115833c022b_480x480.webp" alt="Annika Dahl"
@@ -337,7 +335,7 @@
                 <div class="member-role">Talent Acquisition Specialist</div>
               </div>
             </div>
-            <div class="flex items-center gap-4 team-member-item">
+            <div class="flex items-center gap-4">
               <div
                 class="name-item rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-semibold">
                 <img src="./src/images/premium_photo-1689977927774-401b12d137d6.jpg" alt="John Okomayin"
@@ -704,13 +702,124 @@
 
   <!-- Fixed Mobile Call-to-Action Button -->
   <div class="fixed bottom-4 left-4 right-4 lg:hidden z-30">
-    <a href="#" class="block">
+    <a href="#" class="block" onclick="openCalendar(); return false;">
       <button
         class="w-full bg-black text-white py-4 rounded-full font-semibold text-center hover:bg-gray-800 transition-colors shadow-lg">
         Book an intro call
       </button>
     </a>
   </div>
+
+  <!-- Calendar Modal -->
+  <div id="calendar-modal" class="calendar-modal">
+    <div class="calendar-content">
+      <button class="calendar-close" onclick="closeCalendar()">&times;</button>
+
+      <div class="calendar-header">
+        <h2 class="text-2xl font-semibold text-gray-900 mb-2">Book an intro call</h2>
+        <p class="text-gray-600">Select a convenient time for your intro call</p>
+      </div>
+
+      <div class="calendar-body">
+        <div class="calendar-sidebar">
+          <div class="mb-6">
+            <h3 class="text-lg font-semibold text-gray-900 mb-3">Available Times</h3>
+            <p class="text-sm text-gray-600 mb-4">All times are in your local timezone</p>
+          </div>
+
+          <div class="space-y-2">
+            <div class="time-slot" onclick="selectTimeSlot(this, '9:00 AM')">
+              <span>9:00 AM</span>
+              <span class="text-green-600 text-sm">Available</span>
+            </div>
+            <div class="time-slot" onclick="selectTimeSlot(this, '10:30 AM')">
+              <span>10:30 AM</span>
+              <span class="text-green-600 text-sm">Available</span>
+            </div>
+            <div class="time-slot" onclick="selectTimeSlot(this, '2:00 PM')">
+              <span>2:00 PM</span>
+              <span class="text-green-600 text-sm">Available</span>
+            </div>
+            <div class="time-slot" onclick="selectTimeSlot(this, '3:30 PM')">
+              <span>3:30 PM</span>
+              <span class="text-green-600 text-sm">Available</span>
+            </div>
+            <div class="time-slot" onclick="selectTimeSlot(this, '4:00 PM')">
+              <span>4:00 PM</span>
+              <span class="text-green-600 text-sm">Available</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="calendar-main">
+          <div class="mb-6">
+            <h3 class="text-lg font-semibold text-gray-900 mb-3">Call Details</h3>
+            <div class="bg-gray-50 rounded-lg p-4">
+              <div class="flex items-center gap-3 mb-3">
+                <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <span class="text-sm text-gray-600">30 minutes</span>
+              </div>
+              <div class="flex items-center gap-3 mb-3">
+                <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z">
+                  </path>
+                </svg>
+                <span class="text-sm text-gray-600">Video call via Google Meet</span>
+              </div>
+              <div class="flex items-center gap-3">
+                <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                </svg>
+                <span class="text-sm text-gray-600">Meet the hiring team</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-6">
+            <h4 class="text-md font-semibold text-gray-900 mb-3">Your Information</h4>
+            <div class="space-y-4">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Name</label>
+                <input type="text"
+                  class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                  placeholder="Your full name">
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                <input type="email"
+                  class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                  placeholder="your@email.com">
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Message (Optional)</label>
+                <textarea
+                  class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 h-20"
+                  placeholder="Tell us about yourself..."></textarea>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex gap-3">
+            <button id="confirm-booking"
+              class="flex-1 bg-green-600 text-white py-3 px-6 rounded-full font-semibold hover:bg-green-700 transition-colors"
+              disabled>
+              Book Call
+            </button>
+            <button onclick="closeCalendar()"
+              class="px-6 py-3 border border-gray-300 rounded-full font-semibold text-gray-700 hover:bg-gray-50 transition-colors">
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {

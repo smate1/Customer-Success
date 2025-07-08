@@ -279,23 +279,147 @@ nav [data-section] {
 #mobile-nav-menu {
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 }
-#how-to-apply{
-  margin-bottom: 50px;
-}
-/* Team section mobile styling */
-@media (max-width: 1023px) {
-  .lg\:hidden.mb-6 {
-    animation: slideInFromLeft 0.5s ease-out;
-  }
+
+/* Calendar Modal Styles */
+.calendar-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  backdrop-filter: blur(4px);
 }
 
-@keyframes slideInFromLeft {
+.calendar-modal.active {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.calendar-content {
+  background: white;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 900px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  animation: slideInUp 0.3s ease-out;
+  position: relative;
+}
+
+.calendar-header {
+  padding: 24px;
+  border-bottom: 1px solid #e5e7eb;
+  text-align: center;
+}
+
+.calendar-body {
+  padding: 24px;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 24px;
+}
+
+.calendar-sidebar {
+  border-right: 1px solid #e5e7eb;
+  padding-right: 24px;
+}
+
+.calendar-main {
+  padding-left: 0;
+}
+
+.time-slot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.time-slot:hover {
+  border-color: #10b981;
+  background-color: #f0fdf4;
+}
+
+.time-slot.selected {
+  background-color: #10b981;
+  border-color: #10b981;
+  color: white;
+}
+
+.calendar-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #6b7280;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.calendar-close:hover {
+  background-color: #f3f4f6;
+  color: #374151;
+}
+
+@keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateX(-20px);
   }
   to {
     opacity: 1;
-    transform: translateX(0);
   }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Mobile team section padding reduction */
+@media (max-width: 1023px) {
+  .mobile-team-section {
+    padding: 16px !important;
+    margin: 16px 0 !important;
+  }
+
+  .calendar-body {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .calendar-sidebar {
+    border-right: none;
+    border-bottom: 1px solid #e5e7eb;
+    padding-right: 0;
+    padding-bottom: 16px;
+  }
+}
+
+#how-to-apply{
+  margin-bottom: 50px;
 }

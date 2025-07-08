@@ -215,92 +215,22 @@ class NavigationController {
 		if (!this.contentArea) return
 
 		let activeSection = null
-		let debounceTimer = null
-
-		const observer = new IntersectionObserver(
-			entries => {
-				// Clear previous debounce timer
-				if (debounceTimer) {
-					clearTimeout(debounceTimer)
-				}
-
-				// Debounce to prevent rapid switching
-				debounceTimer = setTimeout(() => {
-					// Find the section with the highest intersection ratio
-					let mostVisibleSection = null
-					let highestRatio = 0
-
-					entries.forEach(entry => {
-						if (
-							entry.isIntersecting &&
-							entry.intersectionRatio > highestRatio
-						) {
-							highestRatio = entry.intersectionRatio
-							mostVisibleSection = entry.target
-						}
-					})
-
-					// If no section is intersecting, find the closest one
-					if (!mostVisibleSection) {
-						let closestDistance = Infinity
-						entries.forEach(entry => {
-							const rect = entry.target.getBoundingClientRect()
-							const distance = Math.abs(rect.top)
-							if (distance < closestDistance) {
-								closestDistance = distance
-								mostVisibleSection = entry.target
-							}
-						})
-					}
-
-					// Update active section only if it's different
-					if (mostVisibleSection && mostVisibleSection !== activeSection) {
-						activeSection = mostVisibleSection
-						const sectionId = activeSection.id
-
-						const correspondingDesktopNavItem = document.querySelector(
-							`.tab[data-section="${sectionId}"]`
-						)
-						const correspondingMobileNavItem = document.querySelector(
-							`.mobile-tab[data-section="${sectionId}"]`
-						)
-
-						if (correspondingDesktopNavItem) {
-							this.setActiveDesktopNav(correspondingDesktopNavItem)
-						}
-
-						if (correspondingMobileNavItem) {
-							this.setActiveMobileNav(correspondingMobileNavItem)
-						}
-					}
-				}, 100) // 100ms debounce
-			},
-			{
-				threshold: [0, 0.25, 0.5, 0.75, 1],
-				rootMargin: '-10% 0% -10% 0%',
-			}
-		)
-
-		// Observe all sections
-		this.sections.forEach(section => {
-			observer.observe(section)
-		})
-
-		// Also handle manual scroll to update active section
 		let scrollTimer = null
+
 		window.addEventListener('scroll', () => {
 			if (scrollTimer) {
 				clearTimeout(scrollTimer)
 			}
 
 			scrollTimer = setTimeout(() => {
-				// Find the section closest to the top of the viewport
+				const viewportCenter = window.innerHeight / 2
 				let closestSection = null
 				let closestDistance = Infinity
 
 				this.sections.forEach(section => {
 					const rect = section.getBoundingClientRect()
-					const distance = Math.abs(rect.top - 100) // 100px offset for better UX
+					const sectionCenter = rect.top + rect.height / 2
+					const distance = Math.abs(sectionCenter - viewportCenter)
 
 					if (distance < closestDistance) {
 						closestDistance = distance
@@ -322,12 +252,11 @@ class NavigationController {
 					if (correspondingDesktopNavItem) {
 						this.setActiveDesktopNav(correspondingDesktopNavItem)
 					}
-
 					if (correspondingMobileNavItem) {
 						this.setActiveMobileNav(correspondingMobileNavItem)
 					}
 				}
-			}, 150)
+			}, 100) // Debounce scroll
 		})
 	}
 }
@@ -451,6 +380,104 @@ class TeamController {
 	}
 }
 
+// Calendar Controller
+class CalendarController {
+	constructor() {
+		this.modal = document.getElementById('calendar-modal')
+		this.selectedTime = null
+		this.confirmButton = document.getElementById('confirm-booking')
+		this.init()
+	}
+
+	init() {
+		this.setupConfirmButton()
+		// Make functions available globally
+		window.openCalendar = () => this.openCalendar()
+		window.closeCalendar = () => this.closeCalendar()
+		window.selectTimeSlot = (element, time) =>
+			this.selectTimeSlot(element, time)
+	}
+
+	openCalendar() {
+		if (this.modal) {
+			this.modal.classList.add('active')
+			document.body.style.overflow = 'hidden'
+		}
+	}
+
+	closeCalendar() {
+		if (this.modal) {
+			this.modal.classList.remove('active')
+			document.body.style.overflow = ''
+			this.resetSelection()
+		}
+	}
+
+	selectTimeSlot(element, time) {
+		// Remove selected class from all time slots
+		const allSlots = document.querySelectorAll('.time-slot')
+		allSlots.forEach(slot => slot.classList.remove('selected'))
+
+		// Add selected class to clicked slot
+		element.classList.add('selected')
+		this.selectedTime = time
+
+		// Enable confirm button
+		if (this.confirmButton) {
+			this.confirmButton.disabled = false
+			this.confirmButton.textContent = `Book ${time} Call`
+		}
+	}
+
+	resetSelection() {
+		const allSlots = document.querySelectorAll('.time-slot')
+		allSlots.forEach(slot => slot.classList.remove('selected'))
+		this.selectedTime = null
+
+		if (this.confirmButton) {
+			this.confirmButton.disabled = true
+			this.confirmButton.textContent = 'Book Call'
+		}
+	}
+
+	setupConfirmButton() {
+		if (this.confirmButton) {
+			this.confirmButton.addEventListener('click', () => {
+				if (this.selectedTime) {
+					this.handleBooking()
+				}
+			})
+		}
+	}
+
+	handleBooking() {
+		const nameInput = document.querySelector('input[type="text"]')
+		const emailInput = document.querySelector('input[type="email"]')
+		const messageInput = document.querySelector('textarea')
+
+		const name = nameInput?.value.trim()
+		const email = emailInput?.value.trim()
+		const message = messageInput?.value.trim()
+
+		if (!name || !email) {
+			alert('Please fill in your name and email to book the call.')
+			return
+		}
+
+		// Simulate booking confirmation
+		alert(
+			`Thank you ${name}! Your intro call for ${this.selectedTime} has been booked. We'll send a confirmation email to ${email}.`
+		)
+
+		// Clear form and close modal
+		if (nameInput) nameInput.value = ''
+		if (emailInput) emailInput.value = ''
+		if (messageInput) messageInput.value = ''
+
+		this.closeCalendar()
+	}
+}
+
 // Initialize everything when DOM is loaded
 function initializeApp() {
 	try {
@@ -461,9 +488,10 @@ function initializeApp() {
 		new AnimationController()
 		new HiringFunnelController()
 		new TeamController()
+		new CalendarController()
 
 		console.log(
-			'Endless Job Page with enhanced mobile navigation initialized successfully!'
+			'Endless Job Page with enhanced mobile navigation and calendar initialized successfully!'
 		)
 		window.appInitialized = true
 	} catch (error) {
