@@ -216,6 +216,10 @@ nav [data-section] {
   }
   .hiring-block{
     overflow: auto;
+    padding-bottom: 10px;
+  }
+  #how-to-apply{
+    margin-bottom: 0px !important;
   }
 }
 
