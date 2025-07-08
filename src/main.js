@@ -119,7 +119,8 @@ class NavigationController {
 
 	init() {
 		this.setupNavigation()
-		this.setupScrollspy()
+		// Disable scrollspy to prevent automatic tab switching during scroll
+		// this.setupScrollspy()
 		// Set initial active state
 		this.setInitialActiveState()
 	}
