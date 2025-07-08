@@ -1,5 +1,5 @@
 // Main TypeScript file for Endless Job Page
-import './style.css'
+import '../src/style.css'
 
 // Mobile Menu Controller
 class MobileMenuController {
