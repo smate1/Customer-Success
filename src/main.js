@@ -1,16 +1,8 @@
-// Main TypeScript file for Endless Job Page
+// Main JavaScript file for Endless Job Page
 import './style.css'
 
 // Mobile Menu Controller
 class MobileMenuController {
-	private menuToggle: HTMLElement | null
-	private overlay: HTMLElement | null
-	private menu: HTMLElement | null
-	private burgerIcon: HTMLElement | null
-	private closeIcon: HTMLElement | null
-	private mobileNavItems: NodeListOf<Element>
-	private isMenuOpen = false
-
 	constructor() {
 		this.menuToggle = document.getElementById('mobile-menu-toggle')
 		this.overlay = document.getElementById('mobile-nav-overlay')
@@ -18,17 +10,18 @@ class MobileMenuController {
 		this.burgerIcon = document.getElementById('burger-icon')
 		this.closeIcon = document.getElementById('close-icon')
 		this.mobileNavItems = document.querySelectorAll('.mobile-tab[data-section]')
+		this.isMenuOpen = false
 
 		this.init()
 	}
 
-	private init(): void {
+	init() {
 		this.setupMenuToggle()
 		this.setupMobileNavigation()
 		this.setupOverlayClose()
 	}
 
-	private setupMenuToggle(): void {
+	setupMenuToggle() {
 		if (this.menuToggle) {
 			this.menuToggle.addEventListener('click', () => {
 				this.toggleMenu()
@@ -36,7 +29,7 @@ class MobileMenuController {
 		}
 	}
 
-	private setupMobileNavigation(): void {
+	setupMobileNavigation() {
 		this.mobileNavItems.forEach(item => {
 			item.addEventListener('click', e => {
 				e.preventDefault()
@@ -50,7 +43,7 @@ class MobileMenuController {
 		})
 	}
 
-	private setupOverlayClose(): void {
+	setupOverlayClose() {
 		if (this.overlay) {
 			this.overlay.addEventListener('click', e => {
 				if (e.target === this.overlay) {
@@ -60,7 +53,7 @@ class MobileMenuController {
 		}
 	}
 
-	private toggleMenu(): void {
+	toggleMenu() {
 		if (this.isMenuOpen) {
 			this.closeMenu()
 		} else {
@@ -68,7 +61,7 @@ class MobileMenuController {
 		}
 	}
 
-	private openMenu(): void {
+	openMenu() {
 		this.isMenuOpen = true
 		this.overlay?.classList.add('mobile-nav-overlay-open')
 		this.menu?.classList.add('mobile-nav-open')
@@ -78,7 +71,7 @@ class MobileMenuController {
 		document.body.style.overflow = 'hidden'
 	}
 
-	private closeMenu(): void {
+	closeMenu() {
 		this.isMenuOpen = false
 		this.overlay?.classList.remove('mobile-nav-overlay-open')
 		this.menu?.classList.remove('mobile-nav-open')
@@ -88,7 +81,7 @@ class MobileMenuController {
 		document.body.style.overflow = ''
 	}
 
-	private scrollToSection(sectionId: string): void {
+	scrollToSection(sectionId) {
 		const targetElement = document.getElementById(sectionId)
 		if (targetElement) {
 			targetElement.scrollIntoView({
@@ -98,7 +91,7 @@ class MobileMenuController {
 		}
 	}
 
-	private setActiveMobileNav(activeItem: Element): void {
+	setActiveMobileNav(activeItem) {
 		// Remove active class from all mobile nav items
 		this.mobileNavItems.forEach(item => {
 			item.classList.remove('active')
@@ -111,10 +104,6 @@ class MobileMenuController {
 
 // Navigation functionality
 class NavigationController {
-	private navItems: NodeListOf<Element>
-	private sections: NodeListOf<Element>
-	private contentArea: Element | null
-
 	constructor() {
 		this.navItems = document.querySelectorAll('[data-section]')
 		this.sections = document.querySelectorAll('.section')
@@ -125,14 +114,14 @@ class NavigationController {
 		this.init()
 	}
 
-	private init(): void {
+	init() {
 		this.setupNavigation()
 		this.setupScrollspy()
 		// Set initial active state
 		this.setInitialActiveState()
 	}
 
-	private setInitialActiveState(): void {
+	setInitialActiveState() {
 		const firstDesktopTab = document.querySelector(
 			'.tab[data-section="general"]'
 		)
@@ -141,7 +130,7 @@ class NavigationController {
 		}
 	}
 
-	private setupNavigation(): void {
+	setupNavigation() {
 		this.navItems.forEach(item => {
 			item.addEventListener('click', e => {
 				e.preventDefault()
@@ -154,7 +143,7 @@ class NavigationController {
 		})
 	}
 
-	private scrollToSection(sectionId: string): void {
+	scrollToSection(sectionId) {
 		const targetElement = document.getElementById(sectionId)
 		if (targetElement && this.contentArea) {
 			// Smooth scroll to the target section
@@ -165,7 +154,7 @@ class NavigationController {
 		}
 	}
 
-	private setActiveNav(activeItem: Element): void {
+	setActiveNav(activeItem) {
 		// Handle desktop navigation
 		if (activeItem.classList.contains('tab')) {
 			this.setActiveDesktopNav(activeItem)
@@ -177,7 +166,7 @@ class NavigationController {
 		}
 	}
 
-	private setActiveDesktopNav(activeItem: Element): void {
+	setActiveDesktopNav(activeItem) {
 		// Remove active class from all desktop nav items
 		const desktopNavItems = document.querySelectorAll('.tab[data-section]')
 		desktopNavItems.forEach(item => {
@@ -188,7 +177,7 @@ class NavigationController {
 		activeItem.classList.add('active')
 	}
 
-	private setActiveMobileNav(activeItem: Element): void {
+	setActiveMobileNav(activeItem) {
 		// Remove active class from all mobile nav items
 		const mobileNavItems = document.querySelectorAll(
 			'.mobile-tab[data-section]'
@@ -201,7 +190,7 @@ class NavigationController {
 		activeItem.classList.add('active')
 	}
 
-	private setupScrollspy(): void {
+	setupScrollspy() {
 		if (!this.contentArea) return
 
 		const observer = new IntersectionObserver(
@@ -245,12 +234,12 @@ class AnimationController {
 		this.init()
 	}
 
-	private init(): void {
+	init() {
 		this.setupButtonAnimations()
 		this.setupHoverEffects()
 	}
 
-	private setupButtonAnimations(): void {
+	setupButtonAnimations() {
 		const buttons = document.querySelectorAll('button')
 
 		buttons.forEach(button => {
@@ -275,19 +264,19 @@ class AnimationController {
 		})
 	}
 
-	private setupHoverEffects(): void {
+	setupHoverEffects() {
 		// Add subtle hover effects to cards
 		const cards = document.querySelectorAll('.bg-white.rounded-lg')
 
 		cards.forEach(card => {
 			card.addEventListener('mouseenter', () => {
-				;(card as HTMLElement).style.boxShadow =
+				card.style.boxShadow =
 					'0 10px 25px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
-				;(card as HTMLElement).style.transition = 'box-shadow 0.3s ease'
+				card.style.transition = 'box-shadow 0.3s ease'
 			})
 
 			card.addEventListener('mouseleave', () => {
-				;(card as HTMLElement).style.boxShadow =
+				card.style.boxShadow =
 					'0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)'
 			})
 		})
@@ -296,8 +285,6 @@ class AnimationController {
 
 // Hiring funnel animation
 class HiringFunnelController {
-	private funnelSteps: NodeListOf<Element>
-
 	constructor() {
 		this.funnelSteps = document.querySelectorAll(
 			'#hiring-funnel .flex.flex-col.items-center'
@@ -305,7 +292,7 @@ class HiringFunnelController {
 		this.init()
 	}
 
-	private init(): void {
+	init() {
 		// Animate funnel steps when they come into view
 		const observer = new IntersectionObserver(
 			entries => {
@@ -324,7 +311,7 @@ class HiringFunnelController {
 		}
 	}
 
-	private animateFunnelSteps(): void {
+	animateFunnelSteps() {
 		this.funnelSteps.forEach((step, index) => {
 			setTimeout(() => {
 				step.classList.add('animate-fade-in-up')
@@ -339,21 +326,21 @@ class TeamController {
 		this.init()
 	}
 
-	private init(): void {
+	init() {
 		const teamMembers = document.querySelectorAll('.flex.items-center.gap-3')
 
 		teamMembers.forEach(member => {
 			member.addEventListener('mouseenter', () => {
 				const avatar = member.querySelector('.rounded-full')
 				if (avatar) {
-					;(avatar as HTMLElement).style.transition = 'transform 0.2s ease'
+					avatar.style.transition = 'transform 0.2s ease'
 				}
 			})
 
 			member.addEventListener('mouseleave', () => {
 				const avatar = member.querySelector('.rounded-full')
 				if (avatar) {
-					;(avatar as HTMLElement).style.transform = 'scale(1)'
+					avatar.style.transform = 'scale(1)'
 				}
 			})
 		})
@@ -396,10 +383,3 @@ window.addEventListener('load', () => {
 		initializeApp()
 	}
 })
-
-// Declare global variable for TypeScript
-declare global {
-	interface Window {
-		appInitialized?: boolean
-	}
-}

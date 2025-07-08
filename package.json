@@ -1,11 +1,11 @@
 {
-	"name": "cutomer-succes",
+	"name": "customer-success-js",
 	"version": "1.0.0",
-	"description": "",
+	"description": "Customer Success Page - JavaScript version",
 	"main": "index.html",
 	"scripts": {
 		"dev": "vite --host 0.0.0.0",
-		"build": "tsc && vite build",
+		"build": "vite build",
 		"preview": "vite preview --host 0.0.0.0",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
@@ -14,8 +14,5 @@
 	"license": "ISC",
 	"dependencies": {
 		"vite": "^7.0.2"
-	},
-	"devDependencies": {
-		"typescript": "^5.8.3"
 	}
 }
