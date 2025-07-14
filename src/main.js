@@ -1,5 +1,5 @@
 // Main JavaScript file for Endless Job Page
-import './style.css'
+import './main.js'
 
 // Mobile Menu Controller
 class MobileMenuController {
